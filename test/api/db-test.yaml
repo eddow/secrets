@@ -1,0 +1,5 @@
+secrets:
+  - secret: My little secret
+    hash: 42
+    createdAt: 2021-19-1
+    remainingViews: 3

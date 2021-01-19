@@ -1,0 +1,4 @@
+http:
+  port: 4004
+mongo:
+  connect: "mongodb://localhost/secrets-tests"

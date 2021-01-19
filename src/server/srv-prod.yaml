@@ -1,0 +1,4 @@
+http:
+  port: 4003
+mongo:
+  connect: "mongodb://localhost/secrets"
