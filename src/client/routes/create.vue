@@ -87,7 +87,7 @@ export default class Create extends Vue {
 	async submit() {
 		this.submitting = true;
 		try {
-			let created = await Secret.create(this.secret, this.expireAfterViews, this.expireAfter);
+			let created: any = await Secret.create(this.secret, this.expireAfterViews, this.expireAfter);
 			this.created = {
 				hash: created.hash,
 				url: location.origin + '/read/' + created.hash

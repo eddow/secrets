@@ -5,12 +5,15 @@
 				Read a secret
 			</div>
 		</h2>
-		<div v-if="secret" class="ui middle aligned center aligned grid">
+		<div v-if="secret">
 			<h3 class="ui header">
 				<div class="title content">
 					{{secret.secretText}}
 				</div>
 			</h3>
+			<div>
+				Remaing views: {{secret.remainingViews}}
+			</div>
 		</div>
 		<div v-else class="title content">
 			Loading...
