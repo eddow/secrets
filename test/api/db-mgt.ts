@@ -2,10 +2,10 @@ import {readYaml} from '../../src/server/lib/utils';
 import Secret from '../../src/server/models/secret'
 
 import * as mongoose from 'mongoose';
-import {exec, ChildProcess} from 'child_process';
+//import {exec, ChildProcess} from 'child_process';
 
 const config = global['config'] = readYaml('srv-test');
-var mongo, serverProcess: ChildProcess;
+var mongo/*, serverProcess: ChildProcess*/;
 
 async function emptyDB() {
 	let collection = mongoose.connection.collection('secrets');
@@ -27,6 +27,16 @@ beforeAll(async () => {
 	await Secret.create(seed.secrets);
 	
 	/* Start the test-server
+
+	Note - after a bit more of an hour struggling and tweaking with linux-like signal/event/...
+		and indeed, not geting to get the servers to be closed properly by jest,
+		(there are 3 layers of process/sub-process here)
+		I would, in a work environment ask help to a colleg, but here my obstination
+		wouldn't bring much more.
+
+		So, for now, the tester has to start the `start-test-server` and stop it manually for
+		the tests to pass.
+
 	serverProcess = exec('node dist/server -c srv-test', {
 		cwd: '.'
 	});
@@ -47,7 +57,7 @@ beforeAll(async () => {
 			}
 		serverProcess.stdout.on('data', triggerListen);
 		serverProcess.on('exit', triggerFail);
-	});*/
+	});//*/
 });
 
 afterAll(async () => {
@@ -56,6 +66,6 @@ afterAll(async () => {
 	serverProcess.stdout.removeAllListeners("data");
 	serverProcess.stderr.removeAllListeners("data");
 	serverProcess.stdout.pipe(process.stdout);
-	serverProcess.stderr.pipe(process.stderr);*/
+	serverProcess.stderr.pipe(process.stderr);//*/
 	await mongoose.connection.close();
 });

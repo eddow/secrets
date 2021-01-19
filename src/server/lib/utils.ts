@@ -14,13 +14,3 @@ export function readYaml(file: string, path?: string) {
 	file = readFileSync(join(process.cwd(), path || './dist/server/', file), 'utf8');
 	return yaml.parse(file);
 }
-
-export function encrypt(text: string) {
-	// TODO
-	return text;
-}
-
-export function decrypt(text: string) {
-	// TODO
-	return text;
-}

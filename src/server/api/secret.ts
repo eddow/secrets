@@ -1,5 +1,6 @@
 import * as express from 'express';
-import {md5, encrypt, decrypt} from '@/lib/utils'
+import {md5} from '@/lib/utils'
+import {encrypt, decrypt} from '@/lib/encryption'
 import Secret from '@/models/secret'
 
 var api = express();

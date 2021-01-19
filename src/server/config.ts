@@ -7,5 +7,5 @@ var options = argv.option([{
     type: 'string'
 }]).run().options;
 
-const server = readYaml(options.config || 'srv-prod');
-export default server;
+const config = readYaml(options.config || 'srv-prod');
+export default config;
