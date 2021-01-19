@@ -22,7 +22,7 @@
 </style>
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator'
+import {Component, Watch, Provide} from 'vue-property-decorator'
 import mainMenu from './menu.vue'
 import {globals} from '@/lib/ajax'
 
@@ -30,8 +30,10 @@ import {globals} from '@/lib/ajax'
 	components: {mainMenu}
 })
 export default class App extends Vue {
+	@Provide() router;
 	constructor(...args: any[]) {
 		super(...args);
+		this.router = (<any>this).$router;
 		globals.failure = (err: any)=> {
 			(<any>$(this.$refs.main)).toast({
 				class: 'error',

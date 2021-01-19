@@ -1,50 +1,45 @@
 <template>
-	<div class="ui middle aligned center aligned grid">
-		<div class="column">
-			<h2 class="ui teal header">
-				<div class="content">
-					Create a secret
-				</div>
-			</h2>
-			<form class="ui large form">
-				<div class="ui stacked segment">
-					<div class="field">
-						<div class="ui left icon input">
-							<i class="feather icon"></i>
-							<textarea name="secret" v-model="secret"
-								placeholder="Secret content" ref="secret"
-							></textarea>
-						</div>
-					</div>
-					<div class="field">
-						<div class="ui left icon input">
-							<i class="clock outline icon"></i>
-							<input type="number" name="expireAfter" v-model="expireAfter"
-								placeholder="Minutes of TTL">
-						</div>
-					</div>
-					<div class="field">
-						<div class="ui left icon input">
-							<i class="eye icon"></i>
-							<input type="number" name="expireAfterViews" v-model="expireAfterViews"
-								placeholder="Number of allowed views">
-						</div>
-					</div>
-					<button type="submit" :class="[
-							'ui fluid large teal submit button',
-							submitting? 'disabled':''
-						]">
-						Send
-					</button>
-				</div>
-				<div class="ui error message"></div>
-			</form>
-			<div class="ui message">
-				<router-link to="/register">
-					Register
-				</router-link>
+	<div class="ui center aligned">
+		<h2 class="ui teal header">
+			<div class="content">
+				Create a secret
 			</div>
-		</div>
+		</h2>
+		<form class="ui form">
+			<div class="field">
+				<div class="ui left icon input">
+					<i class="pen icon"></i>
+					<textarea name="secret" v-model="secret"
+						placeholder="Secret content" ref="secret"
+					></textarea>
+				</div>
+			</div>
+			<div class="fields">
+				<div class="field">
+					<label for="expireAfter">Minutes of TTL</label>
+					<div class="ui left icon input">
+						<i class="clock outline icon"></i>
+						<input type="number" name="expireAfter" v-model="expireAfter"
+							placeholder="Minutes of TTL">
+					</div>
+				</div>
+				<div class="field">
+					<label for="expireAfterViews">Number of allowed views</label>
+					<div class="ui left icon input">
+						<i class="eye icon"></i>
+						<input type="number" name="expireAfterViews" v-model="expireAfterViews"
+							placeholder="Number of allowed views">
+					</div>
+				</div>
+			</div>
+			<button type="submit" :class="[
+					'ui fluid large teal submit button',
+					submitting? 'disabled':''
+				]">
+				Create
+			</button>
+			<div class="ui error message"></div>
+		</form>
 	</div>
 </template>
 <script lang="ts">
@@ -57,7 +52,7 @@ import form from '@/lib/form';
 export default class Create extends Vue {
 	secret: string = '';
 	expireAfterViews: number = 3;
-	expireAfter: number = 0
+	expireAfter: number = null
 	mounted() {
 		form({
 			fields: {

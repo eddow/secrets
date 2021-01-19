@@ -5,11 +5,12 @@ Vue.use(VueRouter);
 
 import Create from './create.vue';
 import Read from './read.vue';
+import Hash from './hash.vue';
 import * as kebab from 'kebab-case'
 
 const routes: RouteConfig[] = [];
 
-const components = {Create, Read};
+const components = {Create, Read, Hash};
 for(let comp in components) {
 	let name = kebab(comp),
 		component = components[comp];
@@ -19,6 +20,10 @@ for(let comp in components) {
 		name,
 		component
 	};
+	if(component.params) {
+		route.path += '/:' + component.params.join('/:');
+		route.props = true
+	}
 	routes.unshift(route);
 }
 const router = new VueRouter({

@@ -1,10 +1,10 @@
 <template>
-	<div class="ui vertical menu">
+	<div class="ui horizontal menu">
 		<router-link to="/create" class="item">
 			Create
-			<i class="feather icon" />
+			<i class="pen icon" />
 		</router-link>
-		<router-link to="/read" class="item">
+		<router-link to="/hash" class="item">
 			Read
 			<i class="eye outline icon" />
 		</router-link>

@@ -6,8 +6,8 @@ export class Secret {
 		return post('secret', {secret, expireAfterViews, expireAfter});
 		// TODO: return hash
 	}
-	static async get(hash: string): Promise<Secret> {
-		return get<Secret>(`secret/${id}`);
+	static async read(hash: string): Promise<Secret> {
+		return get<Secret>(`secret/${hash}`);
 		// TODO: create secret from answer
 	}
 }

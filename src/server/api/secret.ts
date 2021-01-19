@@ -3,7 +3,7 @@ import {md5, encrypt, decrypt} from '@/lib/utils'
 import {Secret} from '@/lib/mongo'
 
 var api = express();
-api.get('/:hash', (req, res)=> {
+api.get('/:hash', async (req, res)=> {
 	const filter: any = {hash: req.params.hash};
 	try {
 		var rv = await Secret.findOne(filter);

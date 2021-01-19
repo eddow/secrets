@@ -6,7 +6,6 @@ import config from './config';
 
 const app = express();
 app.use(morgan('dev'));
-app.use(formidable());
 app.use(express.static('./dist/client'));
 
 app.use('/', api);
