@@ -1,6 +1,6 @@
 import * as express from 'express';
 import {md5, encrypt, decrypt} from '@/lib/utils'
-import {Secret} from '@/lib/mongo'
+import Secret from '@/models/secret'
 
 var api = express();
 api.get('/:hash', async (req, res)=> {

@@ -41,7 +41,6 @@ export default class Read extends Vue {
 	async specifyHash() {
 		try {
 			this.secret = await Secret.read(this.hash);
-			//TODO: set this.secret from answer
 		} catch (e) {
 			this.router.push('/hash')
 			// Error is displayed in the global error catcher
