@@ -7,14 +7,30 @@ api.get('/:hash', async (req, res)=> {
 	const filter: any = {hash: req.params.hash};
 	try {
 		var rv = await Secret.findOne(filter);
-		// TODO: decrement views, check TTL
+
+		if(rv) {
+			let now = (new Date()).getTime();
+			if(rv.expiresAt && now > rv.expiresAt.getTime()) {
+				rv.deleteOne();
+				rv = null;
+			}
+			if(--rv.remainingViews)
+				rv.save();
+			else
+				rv.deleteOne();
+		}
 
 		if(!rv) {
 			res.status(404);
 			res.send('No such secret');
 		} else {
-			rv.secret = decrypt(rv.secret);
-			res.send(rv);
+			res.send({
+				hash: rv.hash,
+				secretText: decrypt(rv.secretText),
+				createdAt: rv.createdAt,
+				expiresAt: rv.expiresAt,
+				remainingViews: rv.remainingViews
+			});
 		}
 	} catch(err) {
 		res.status(500);
@@ -22,22 +38,24 @@ api.get('/:hash', async (req, res)=> {
 	}
 });
 api.post('/', async (req, res)=> {
-	let secret = new Secret({
-		hash: md5(req.params.hash),
-		secretText: encrypt(req.fields.secret),
-		createdAt: new Date(),
-		expiresAt: null,
-		remainingViews: req.fields.expireAfterViews
-	});
-	if(req.fields.expireAfter) {
-		let expiration = new Date();
-		expiration.setTime(expiration.getTime()+req.fields.expireAfter*60*1000)
-		secret.expiresAt = expiration;
-	}
 	try {
-		Secret.insertOne(secret);
+		let secret = {
+			hash: md5(req.body.secret),
+			secretText: encrypt(req.body.secret),
+			createdAt: new Date(),
+			expiresAt: null,
+			remainingViews: req.body.expireAfterViews
+		};
+		if(req.body.expireAfter) {
+			let expiration = new Date();
+			expiration.setTime(expiration.getTime()+req.body.expireAfter*60*1000)
+			secret.expiresAt = expiration;
+		}
+		await Secret.create(secret);
+		res.send(secret);
 	} catch(err) {
 		res.status(500);
+		console.log(err);
 		res.send(err.message);
 	};
 });

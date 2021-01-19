@@ -5,12 +5,15 @@
 				Read a secret
 			</div>
 		</h2>
-		<div class="ui middle aligned center aligned grid">
+		<div v-if="secret" class="ui middle aligned center aligned grid">
 			<h3 class="ui header">
 				<div class="title content">
-					{{secret}}
+					{{secret.secretText}}
 				</div>
 			</h3>
+		</div>
+		<div v-else class="title content">
+			Loading...
 		</div>
 	</div>
 </template>
@@ -28,14 +31,13 @@ export default class Read extends Vue {
 	static params = ['hash'];
 	@Prop() hash: string;
 	@Inject() router: VueRouter;
-	secret: string = ''
+	secret: any = null
 	mounted() {
 		this.specifyHash();
 	}
 	async specifyHash() {
 		try {
-			this.secret = "Loading...";
-			await Secret.read(this.hash);
+			this.secret = await Secret.read(this.hash);
 			//TODO: set this.secret from answer
 		} catch (e) {
 			this.router.push('/hash')

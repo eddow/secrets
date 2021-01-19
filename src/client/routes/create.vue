@@ -5,7 +5,7 @@
 				Create a secret
 			</div>
 		</h2>
-		<form class="ui form">
+		<form v-if="!created" class="ui form">
 			<div class="field">
 				<div class="ui left icon input">
 					<i class="pen icon"></i>
@@ -40,6 +40,14 @@
 			</button>
 			<div class="ui error message"></div>
 		</form>
+		<div v-else>
+			<div>
+				You can share it by copy/pasting this hash-code : <b>{{created.hash}}</b>
+			</div>
+			<div>
+				Or, this url : <a :href="created.url">{{created.url}}</a>
+			</div>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -53,6 +61,7 @@ export default class Create extends Vue {
 	secret: string = '';
 	expireAfterViews: number = 3;
 	expireAfter: number = null
+	created: any = null
 	mounted() {
 		form({
 			fields: {
@@ -78,7 +87,11 @@ export default class Create extends Vue {
 	async submit() {
 		this.submitting = true;
 		try {
-			await Secret.create(this.secret, this.expireAfterViews, this.expireAfter);
+			let created = await Secret.create(this.secret, this.expireAfterViews, this.expireAfter);
+			this.created = {
+				hash: created.hash,
+				url: location.origin + '/read/' + created.hash
+			}
 		} catch (e) {
 			// Error is displayed in the global error catcher
 		} finally {
