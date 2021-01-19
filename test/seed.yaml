@@ -1,9 +1,9 @@
 secrets:
-  - secret: My little secret
+  - secretText: My little secret
     hash: "42"
     createdAt: 2001-12-15T02:59:43.1Z
     remainingViews: 3
-  - secret: Wohoo - secrets
+  - secretText: Wohoo - secrets
     hash: "43"
     createdAt: 2001-12-15T02:59:43.1Z
     remainingViews: 1

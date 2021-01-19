@@ -4,7 +4,7 @@ import Secret from '../../src/server/models/secret'
 import * as mongoose from 'mongoose';
 import {exec, ChildProcess} from 'child_process';
 
-const config = readYaml('srv-test');
+const config = global['config'] = readYaml('srv-test');
 var mongo, serverProcess: ChildProcess;
 
 async function emptyDB() {
